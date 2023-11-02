@@ -32,7 +32,7 @@ const Login = () => {
       const response = await result.json();
       if (result.status == 200) {
         navigate("/home");
-        console.log(response.id);
+        console.log(response);
       }
       if (result.status != 200) {
         alert("enter details");

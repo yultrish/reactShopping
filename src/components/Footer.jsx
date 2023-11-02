@@ -11,15 +11,15 @@ const Footer = () => {
               <h3>Download our App</h3>
               <p>Download App for Android and ios mobile phone.</p>
               <div class="app-logo">
-                <img src="images/play-store.png" />
-                <img src="images/app-store.png" />
+                {/* <img src="images/play-store.png" />
+                <img src="images/app-store.png" /> */}
               </div>
             </div>
             <div class="footer-col-2">
-              <img src="images/logo-white.png" />
+              {/* <img src="images/logo-white.png" /> */}
               <p>
                 Our Purpose Is To Sustainably Make th Pleasure and Benefits of
-                Sports Accessible to the Many.
+                Fashion Accessible to the Many.
               </p>
             </div>
             <div class="footer-col-3">
@@ -42,7 +42,7 @@ const Footer = () => {
             </div>
           </div>
           <hr />
-          <p class="copyright"> Copytight 2020 - Rahul Kumar Sinha</p>
+          <p class="copyright"> Copytight 2023</p>
         </div>
       </div>
     </>

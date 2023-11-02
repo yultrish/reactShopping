@@ -9,7 +9,7 @@ const Navbar = () => {
           <div class="navbar">
             <div class="logo">
               <a href="index.html">
-                <img src="images/logo.png" width="125px" />
+                {/* <img src="images/logo.png" width="125px" /> */}
               </a>
             </div>
             <nav>
@@ -31,7 +31,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </nav>
-            <a href="cart.html">
+            <a>
               <img src="images/cart.png" width="30px" height="30px" />
             </a>
             <img

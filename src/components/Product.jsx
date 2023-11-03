@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Top.css";
+import "./styles.css";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -40,7 +40,7 @@ function ProductList() {
 
   return (
     <div className="small-container" id="product-container">
-      <div class="row1 row-2">
+      <div className="row row-2">
         <h2>All Products</h2>
         <select>
           <option value="">Default Shorting</option>
@@ -55,7 +55,7 @@ function ProductList() {
           <div key={product.id} className="col-4">
             <img src={product.image} alt={product.name} />
             <h4>{product.name}</h4>
-            <p className="price">{product.price}</p>
+            <p className="price">GHC{product.price}</p>
             <button
               className="add-to-cart"
               onClick={() => handleAddToCartClick(product.id)}

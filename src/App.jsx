@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Routes from "./routes";
+import { AuthProvider } from "./context/ContextAuth";
 // import { Router } from "react-router-dom";
 // import {
 //   createBrowserRouter,
@@ -28,15 +29,25 @@ import Routes from "./routes";
 
 function App() {
   return (
-    <Routes />
-    // <BrowserRouter>
-    // <header>
-    //   <h1>JobRouter</h1>
-    //   <Link to="/">Login</Link>
-    //   <NavLink to="home">Home</NavLink>
-    //   <NavLink to="about">About</NavLink>
-    // </header>
-    // <RouterProvider router={router} /> // </BrowserRouter>
+    <>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+      {/* <Routes /> */}
+      {/* <AuthProvider /> */}
+      {/* //{" "}
+      <BrowserRouter>
+        //{" "}
+        <header>
+          // <h1>JobRouter</h1>
+          // <Link to="/">Login</Link>
+          // <NavLink to="home">Home</NavLink>
+          // <NavLink to="about">About</NavLink>
+          //{" "}
+        </header>
+        // <RouterProvider router={router} /> //{" "} */}
+      {/* </BrowserRouter> */}
+    </>
   );
 }
 

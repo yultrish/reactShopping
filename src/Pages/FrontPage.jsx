@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 
-const Cart = () => {
+const FrontPage = () => {
   return (
     <>
       <Navbar />
@@ -9,4 +9,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default FrontPage;

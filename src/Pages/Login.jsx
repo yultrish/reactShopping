@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "./login.css";
+// import "../components/styles.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, setAuth } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,9 +33,11 @@ const Login = () => {
       });
 
       const response = await result.json();
-      if (result.status == 200) {
+      if (response.id) {
+        login(response);
+        setAuth(true);
         navigate("/home");
-        console.log(response);
+        console.log(response.id);
       }
       if (result.status != 200) {
         alert("enter details");

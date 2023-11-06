@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
-import Routes from "./routes";
+import Routers from "./Routers";
 import { AuthProvider } from "./context/ContextAuth";
+import { AnimatePresence } from "framer-motion";
 // import { Router } from "react-router-dom";
 // import {
 //   createBrowserRouter,
@@ -30,9 +31,11 @@ import { AuthProvider } from "./context/ContextAuth";
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Routes />
-      </AuthProvider>
+      <AnimatePresence wait>
+        <AuthProvider>
+          <Routers />
+        </AuthProvider>
+      </AnimatePresence>
       {/* <Routes /> */}
       {/* <AuthProvider /> */}
       {/* //{" "}

@@ -6,7 +6,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  /* background: radial-gradient(#fff, var(--bg-color)); */
+  background: radial-gradient(#fff, var(--bg-color));
 }
 
 :root {
@@ -140,8 +140,9 @@ p {
   padding: 5px 10px;
   font-size: 14px;
   position: relative;
-  top: -10px;
-  left: 5px;
+  top: 15px;
+  left: -30px;
+  cursor: pointer;
 }
 
 .categories {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cartIcon from "./images/cart.png";
 import menuIcon from "./images/menu.png";
 import "./styles.css";
@@ -22,14 +22,80 @@ const Navbar = () => {
     { text: "Account", link: "" },
   ];
 
+  const [cartCount, setCartCount] = useState(0); // Initialize with 0
+
+  useEffect(() => {
+    // Function to fetch cart count
+    async function fetchCartCount() {
+      try {
+        const customer_token = localStorage.getItem("customer_token");
+
+        if (!customer_token) {
+          return;
+        }
+
+        const result = await fetch(
+          "http://localhost:7070/shop/v1/customer-with-token",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              token: customer_token,
+            }),
+          }
+        );
+
+        if (result.status === 200) {
+          let response = await result.json();
+          console.log("Customer Info:", response);
+
+          if (response.length > 0) {
+            const customerId = response[0].id;
+            console.log("Customer ID:", customerId);
+
+            let customer_id = localStorage.getItem("customer_id");
+
+            if (!customer_id) {
+              localStorage.setItem("customer_id", customerId);
+            }
+
+            const rs = await fetch(
+              "http://localhost:7070/shop/v1/orders-with-customerId",
+              {
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                  customer_id: customerId,
+                }),
+              }
+            );
+
+            if (rs.status === 200) {
+              let orders = await rs.json();
+              console.log("Order Info:", orders);
+              const orderCount = orders.order.length;
+              console.log("Cart Item Count: " + orderCount);
+
+              setCartCount(orderCount); // Update the cart count
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error updating cart item count:", error);
+      }
+    }
+
+    fetchCartCount();
+  }, []); // Empty dependency array for initial fetch
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const menuStyles = {
-    maxHeight: isMenuOpen ? "200px" : "0px",
   };
 
   let authElement;
@@ -61,7 +127,7 @@ const Navbar = () => {
           <div className="logo">
             <a href="index.html">{authElement}</a>
           </div>
-          <nav style={menuStyles}>
+          <nav style={{ maxHeight: isMenuOpen ? "200px" : "0px" }}>
             <ul id="MenuItems">
               {menuItems.map((item, index) => (
                 <li key={index}>
@@ -72,7 +138,7 @@ const Navbar = () => {
           </nav>
           <a>
             <img src={cartIcon} alt="Cart" width="30px" height="30px" />
-            <span className="cart-number">0</span>
+            <span className="cart-number">{cartCount}</span>
           </a>
           <img
             src={menuIcon}

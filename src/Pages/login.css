@@ -10,7 +10,6 @@ body {
   margin: 0;
   font-family: Roboto, -apple-system, "Helvetica Neue", "Segoe UI", Arial,
     sans-serif;
-  background: #358597;
   /* background: radial-gradient(#fff, var(--bg-color)); */
 }
 
@@ -19,6 +18,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: #358597;
+  height: 100vh;
 }
 
 .section-title {

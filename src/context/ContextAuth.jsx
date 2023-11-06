@@ -2,10 +2,9 @@ import { createContext, useState } from "react";
 
 export const ContextAuth = createContext();
 
-// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState([""]);
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState();
 
   const login = (user) => {
     setCurrentUser(user);
@@ -30,5 +29,3 @@ export const AuthProvider = ({ children }) => {
     </>
   );
 };
-
-// export default Context

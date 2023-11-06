@@ -26,8 +26,42 @@ const Navbar = () => {
 
   useEffect(() => {
     // Function to fetch cart count
-    async function fetchCartCount() {
+    // async function createNewCustomerId() {
+    //   let customer_token = localStorage.getItem("customer_token");
+
+    //   if (!customer_token) {
+    //     customer_token = Math.random() + new Date().toLocaleDateString();
+    //     console.log("Customer Token: " + customer_token);
+
+    //     const url = "http://localhost:7070/shop/v1/customer";
+    //     try {
+    //       const result = await fetch(url, {
+    //         method: "POST",
+    //         headers: {
+    //           "content-type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //           name: "yultrish",
+    //           city: "Accra",
+    //           token: customer_token,
+    //         }),
+    //       });
+
+    //       if (result.status === 200) {
+    //         localStorage.setItem("customer_token", customer_token);
+    //       }
+    //     } catch (error) {
+    //       console.error("Error creating a new customer:", error);
+    //     }
+    //   }
+    //   console.log("Customer already created");
+    //   console.log(cartNumber);
+    // }
+
+    async function cartNumber() {
       try {
+        console.log("Getting cart items list");
+
         const customer_token = localStorage.getItem("customer_token");
 
         if (!customer_token) {
@@ -49,39 +83,37 @@ const Navbar = () => {
 
         if (result.status === 200) {
           let response = await result.json();
-          console.log("Customer Info:", response);
+          console.log(response);
+          console.log("Response ID: " + response[0].id);
+          const id = response[0].id;
+          console.log("Customer ID: " + id);
 
-          if (response.length > 0) {
-            const customerId = response[0].id;
-            console.log("Customer ID:", customerId);
+          let customer_id = localStorage.getItem("customer_id");
 
-            let customer_id = localStorage.getItem("customer_id");
+          if (!customer_id) {
+            localStorage.setItem("customer_id", id);
+          }
 
-            if (!customer_id) {
-              localStorage.setItem("customer_id", customerId);
+          const rs = await fetch(
+            "http://localhost:7070/shop/v1/orders-with-customerId",
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({
+                customer_id: id,
+              }),
             }
+          );
 
-            const rs = await fetch(
-              "http://localhost:7070/shop/v1/orders-with-customerId",
-              {
-                method: "POST",
-                headers: {
-                  "content-type": "application/json",
-                },
-                body: JSON.stringify({
-                  customer_id: customerId,
-                }),
-              }
-            );
+          if (rs.status === 200) {
+            let orders = await rs.json();
+            console.log(orders);
+            const orderCount = orders.order.length;
+            console.log("Cart Item Count: " + orderCount);
 
-            if (rs.status === 200) {
-              let orders = await rs.json();
-              console.log("Order Info:", orders);
-              const orderCount = orders.order.length;
-              console.log("Cart Item Count: " + orderCount);
-
-              setCartCount(orderCount); // Update the cart count
-            }
+            setCartCount(orderCount);
           }
         }
       } catch (error) {
@@ -89,8 +121,8 @@ const Navbar = () => {
       }
     }
 
-    fetchCartCount();
-  }, []); // Empty dependency array for initial fetch
+    cartNumber();
+  }, []);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

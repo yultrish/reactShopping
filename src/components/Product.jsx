@@ -37,13 +37,11 @@ function ProductList() {
     }
 
     fetchData();
-    // handleAddToCartClick();
     createNewCustomerId();
     cartNumber();
   }, []);
 
   async function handleAddToCartClick(productId) {
-    console.log("Handling 'Add to Cart' click for product ID:", productId);
     // Your "Add to Cart" button click logic here
     const customer_id = localStorage.getItem("customer_id");
 
@@ -106,7 +104,7 @@ function ProductList() {
       }
     }
     console.log("Customer already created");
-    console.log(cartCount);
+    console.log(cartNumber);
   }
 
   async function cartNumber() {
@@ -173,36 +171,34 @@ function ProductList() {
   }
 
   return (
-    <>
-      <div className="small-container" id="product-container">
-        <div className="row row-2">
-          <h2>All Products</h2>
-          <select>
-            <option value="">Default Sorting</option>
-            <option value="">Sort by price</option>
-            <option value="">Sort by popularity</option>
-            <option value="">Sort by rating</option>
-            <option value="">Sort by sale</option>
-          </select>
-        </div>
-        <div className="row">
-          {products.map((product) => (
-            <div key={product.id} className="col-4">
-              <img src={product.image} alt={product.name} />
-              <h4>{product.name}</h4>
-              <p className="price">GHC{product.price}</p>
-              <div className="rating">{generateStars(product.rating)}</div>
-              <button
-                className="add-to-cart"
-                onClick={() => handleAddToCartClick(product.id)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
+    <div className="small-container" id="product-container">
+      <div className="row row-2">
+        <h2>All Products</h2>
+        <select>
+          <option value="">Default Sorting</option>
+          <option value="">Sort by price</option>
+          <option value="">Sort by popularity</option>
+          <option value="">Sort by rating</option>
+          <option value="">Sort by sale</option>
+        </select>
       </div>
-    </>
+      <div className="row">
+        {products.map((product) => (
+          <div key={product.id} className="col-4">
+            <img src={product.image} alt={product.name} />
+            <h4>{product.name}</h4>
+            <p className="price">GHC{product.price}</p>
+            <div className="rating">{generateStars(product.rating)}</div>
+            <button
+              className="add-to-cart"
+              onClick={() => handleAddToCartClick(product.id)}
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

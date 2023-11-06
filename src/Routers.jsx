@@ -8,9 +8,9 @@ function Routers() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route index="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>

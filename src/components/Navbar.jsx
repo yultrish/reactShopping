@@ -6,7 +6,7 @@ import { useAuth } from "../context/useAuth";
 import { useNavigate, Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { currentUser, auth, logout } = useAuth();
+  const { setCurrentUser, currentUser, auth, setAuth, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,13 +14,17 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const menuItems = [
-    { text: "Home", link: "" },
-    { text: "Products", link: "" },
-    { text: "About", link: "" },
-    { text: "Contact", link: "" },
-    { text: "Account", link: "" },
-  ];
+  // console.log(currentUser)
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    if (localToken && localToken.length > 0) {
+      setAuth(true);
+      let user = JSON.parse(localStorage.getItem("user"));
+      setCurrentUser(user);
+    } else {
+      setAuth(false);
+    }
+  }, [setCurrentUser, setAuth]);
 
   const [cartCount, setCartCount] = useState(0); // Initialize with 0
 
@@ -119,6 +123,8 @@ const Navbar = () => {
       } catch (error) {
         console.error("Error updating cart item count:", error);
       }
+      redirect = useNavigate();
+      redirect("/home");
     }
 
     cartNumber();
@@ -135,7 +141,7 @@ const Navbar = () => {
     authElement = (
       <>
         <div className="flex">
-          <li className="user-name">{currentUser.name}</li>
+          <li className="user-name"> {currentUser.name}</li>
           <li className="logout-control" onClick={handleLogout}>
             <span className="material-symbols-outlined">Logout</span>
           </li>
@@ -157,27 +163,50 @@ const Navbar = () => {
       <div className="container">
         <div className="navbar">
           <div className="logo">
-            <a href="index.html">{authElement}</a>
+            <a>{authElement}</a>
           </div>
-          <nav style={{ maxHeight: isMenuOpen ? "200px" : "0px" }}>
+          <nav>
             <ul id="MenuItems">
-              {menuItems.map((item, index) => (
-                <li key={index}>
-                  <a href={item.link}>{item.text}</a>
-                </li>
-              ))}
+              <Link to="/wel">
+                <li>Home</li>
+              </Link>
+              <Link to="/home">
+                <li>Products</li>
+              </Link>
+              <li>About</li>
+              <li>Contact</li>
+              <li>Account</li>
             </ul>
           </nav>
           <a>
-            <img src={cartIcon} alt="Cart" width="30px" height="30px" />
-            <span className="cart-number">{cartCount}</span>
+            <Link to="/cart">
+              <img src={cartIcon} alt="Cart" width="30px" height="30px" />
+              <span className="cart-number">{cartCount}</span>
+            </Link>
           </a>
           <img
             src={menuIcon}
             alt="Menu"
             className="menu-icon"
-            onClick={toggleMenu}
+            // onClick={toggleMenu}
+            // onClick = {}
           />
+        </div>
+
+        <div className="row">
+          <div className="col-2">
+            <h1>Give Your Workout A New Style !</h1>
+            <p>
+              Success isn't always about greatness. It's about consistency.
+              Consistent hard work gain success. Gretness will come.
+            </p>
+            <Link to="/home">
+              <div className="btn">Explore Now &#8594;</div>
+            </Link>
+          </div>
+          <div className="col-2">
+            <img src="images/image1.png" />
+          </div>
         </div>
       </div>
     </div>

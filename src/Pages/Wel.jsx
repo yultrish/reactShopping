@@ -1,20 +1,15 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import ProductList from "../components/Product";
 import Footer from "../components/footer";
-import "../components/styles.css";
-import "./Home.css";
+// import "./wel.css"
 
-const Home = () => {
+const Wel = () => {
   return (
     <>
       <Navbar />
-
-      <ProductList />
-
       <Footer />
     </>
   );
 };
 
-export default Home;
+export default Wel;

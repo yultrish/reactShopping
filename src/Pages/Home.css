@@ -1,3 +1,7 @@
 .product-list-container {
   margin-top: 20px; /* Adjust the margin as needed to control the spacing */
 }
+
+.header .row{
+  display: none;
+}

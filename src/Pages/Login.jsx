@@ -35,6 +35,7 @@ const Login = () => {
 
       const response = await result.json();
       if (response.id) {
+        localStorage.setItem("userID", response.id);
         login(response);
         setAuth(true);
         navigate("/home");

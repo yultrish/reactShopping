@@ -11,7 +11,7 @@ function CartPage() {
   useEffect(() => {
     async function fetchCartItems() {
       try {
-        const customerId = localStorage.getItem("customer_id");
+        const customerId = localStorage.getItem("userID");
         console.log("customer id");
         console.log(customerId);
 

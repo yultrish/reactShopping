@@ -43,7 +43,8 @@ function ProductList() {
 
   async function handleAddToCartClick(productId) {
     // Your "Add to Cart" button click logic here
-    const customer_id = localStorage.getItem("customer_id");
+    const customer_id = localStorage.getItem("userID");
+    // const userID = localStorage.getItem('userID');
 
     console.log("Product ID:", productId);
     console.log("Customer ID:", customer_id);
@@ -134,13 +135,14 @@ function ProductList() {
         let response = await result.json();
         console.log(response);
         console.log("Response ID: " + response[0].id);
-        const id = response[0].id;
+        const id = localStorage.getItem("userID");
+        // const id = response[0].id;
         console.log("Customer ID: " + id);
 
-        let customer_id = localStorage.getItem("customer_id");
+        let customer_id = localStorage.getItem("userID");
 
         if (!customer_id) {
-          localStorage.setItem("customer_id", id);
+          localStorage.setItem("userID", id);
         }
 
         const rs = await fetch(

@@ -88,14 +88,14 @@ const Navbar = () => {
         if (result.status === 200) {
           let response = await result.json();
           console.log(response);
-          console.log("Response ID: " + response[0].id);
-          const id = response[0].id;
+          // console.log("Response ID: " + id);
+          const id = localStorage.getItem("userID");
           console.log("Customer ID: " + id);
 
-          let customer_id = localStorage.getItem("customer_id");
+          let customer_id = localStorage.getItem("userID");
 
           if (!customer_id) {
-            localStorage.setItem("customer_id", id);
+            localStorage.setItem("userID", id);
           }
 
           const rs = await fetch(

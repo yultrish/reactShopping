@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/useAuth";
+
 import "./styles.css";
 
 function generateStars(rating) {
@@ -15,7 +17,8 @@ function generateStars(rating) {
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
+  // const [cartCount, setCartCount] = useState(0);
+  const { setCartCount } = useAuth();
 
   useEffect(() => {
     // localStorage.removeItem("customer_token");
@@ -38,13 +41,11 @@ function ProductList() {
 
     fetchData();
     createNewCustomerId();
-    cartNumber();
+    // cartNumber();
   }, []);
 
   async function handleAddToCartClick(productId) {
-    // Your "Add to Cart" button click logic here
     const customer_id = localStorage.getItem("userID");
-    // const userID = localStorage.getItem('userID');
 
     console.log("Product ID:", productId);
     console.log("Customer ID:", customer_id);
@@ -70,10 +71,11 @@ function ProductList() {
       const res = await newOrder.json();
       alert("Product added to the shopping cart: " + productId);
       console.log(res);
-    }
 
-    // You can update the cart count using state management if needed
-    setCartCount(cartCount + 1);
+      // After successfully adding the item to the cart, update the cart count.
+      cartNumber();
+      // setCartCount(orderCount);
+    }
   }
 
   async function createNewCustomerId() {
@@ -134,7 +136,7 @@ function ProductList() {
       if (result.status === 200) {
         let response = await result.json();
         console.log(response);
-        console.log("Response ID: " + response[0].id);
+        // console.log("Response ID: " + response[0].id);
         const id = localStorage.getItem("userID");
         // const id = response[0].id;
         console.log("Customer ID: " + id);

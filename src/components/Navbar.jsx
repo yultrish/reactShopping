@@ -6,7 +6,15 @@ import { useAuth } from "../context/useAuth";
 import { useNavigate, Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { setCurrentUser, currentUser, auth, setAuth, logout } = useAuth();
+  const {
+    setCurrentUser,
+    currentUser,
+    auth,
+    setAuth,
+    logout,
+    setCartCount,
+    cartCount,
+  } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,19 +22,16 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  // console.log(currentUser)
   useEffect(() => {
     const localToken = localStorage.getItem("token");
-    if (localToken && localToken.length > 0) {
-      setAuth(true);
-      let user = JSON.parse(localStorage.getItem("user"));
-      setCurrentUser(user);
-    } else {
-      setAuth(false);
-    }
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isAuth = localToken && localToken.length > 0;
+
+    setAuth(isAuth);
+    setCurrentUser(isAuth ? user : null);
   }, [setCurrentUser, setAuth]);
 
-  const [cartCount, setCartCount] = useState(0); // Initialize with 0
+  // const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     // Function to fetch cart count
@@ -123,8 +128,8 @@ const Navbar = () => {
       } catch (error) {
         console.error("Error updating cart item count:", error);
       }
-      redirect = useNavigate();
-      redirect("/home");
+      navigate = useNavigate();
+      navigate("/home");
     }
 
     cartNumber();

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
+import { useAuth } from "../context/useAuth";
 
 function CartPage() {
   const [orders, setOrders] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
+  const { cartCount, setCartCount } = useAuth();
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -79,10 +81,11 @@ function CartPage() {
           const response = await result.json();
           console.log(response);
           console.log("Deleted successfully");
+          setCartCount(cartCount - 1);
           calculateTotalPrice(updatedOrders);
         }
 
-        // You can also redirect or update the UI as needed after successful deletion
+        // setOrders(cartCount);
       }
     } catch (error) {
       console.error(error);

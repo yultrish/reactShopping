@@ -3,9 +3,10 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState([""]);
-  const [token, setToken] = useState([""]);
+  const [currentUser, setCurrentUser] = useState("");
+  const [token, setToken] = useState("");
   const [auth, setAuth] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   const login = async (user) => {
     if (user.id) {
@@ -14,17 +15,15 @@ export const AuthProvider = ({ children }) => {
         Math.random().toString(36).substring(2, 15);
       setToken(randomNum);
       localStorage.setItem("token", randomNum);
-      let User = JSON.stringify(user);
-      setCurrentUser(User);
+      setCurrentUser(JSON.stringify(user));
       setAuth(true);
-      localStorage.setItem("user", User);
-      return;
+      localStorage.setItem("user", JSON.stringify(user));
     }
   };
 
   const logout = () => {
-    setCurrentUser(null);
-    setToken(null);
+    setCurrentUser("");
+    setToken("");
     setAuth(false);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -32,15 +31,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
-    if (localToken && localToken.length > 0) {
+    if (localToken && localToken.length) {
       setAuth(true);
     } else {
       setAuth(false);
-      console.log("user not authenticated");
     }
   }, [currentUser, setToken]);
 
-  const data = {
+  const details = {
     auth,
     setAuth,
     setCurrentUser,
@@ -49,11 +47,11 @@ export const AuthProvider = ({ children }) => {
     setToken,
     login,
     logout,
+    cartCount,
+    setCartCount,
   };
 
   return (
-    <>
-      <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
-    </>
+    <AuthContext.Provider value={details}>{children}</AuthContext.Provider>
   );
 };

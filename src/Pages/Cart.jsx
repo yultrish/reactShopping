@@ -8,11 +8,17 @@ function CartPage() {
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
-  const { cartCount, setCartCount } = useAuth();
+  const { cartCount, setCartCount, auth } = useAuth();
 
   useEffect(() => {
     async function fetchCartItems() {
       try {
+        if (!auth) {
+          // User is not logged in, clear the cart items
+          setOrders([]);
+          return;
+        }
+
         const customerId = localStorage.getItem("userID");
         console.log("customer id");
         console.log(customerId);
@@ -43,7 +49,7 @@ function CartPage() {
     }
 
     fetchCartItems();
-  }, []);
+  }, [auth]);
 
   const calculateTotalPrice = (data) => {
     const prices = data.map((order) => order.products.price);
@@ -84,8 +90,6 @@ function CartPage() {
           setCartCount(cartCount - 1);
           calculateTotalPrice(updatedOrders);
         }
-
-        // setOrders(cartCount);
       }
     } catch (error) {
       console.error(error);

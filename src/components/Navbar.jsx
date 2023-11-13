@@ -15,7 +15,7 @@ const Navbar = () => {
     setCartCount,
     cartCount,
   } = useAuth();
-  const navigate = useNavigate();
+  let navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
@@ -31,42 +31,7 @@ const Navbar = () => {
     setCurrentUser(isAuth ? user : null);
   }, [setCurrentUser, setAuth]);
 
-  // const [cartCount, setCartCount] = useState(0);
-
   useEffect(() => {
-    // Function to fetch cart count
-    // async function createNewCustomerId() {
-    //   let customer_token = localStorage.getItem("customer_token");
-
-    //   if (!customer_token) {
-    //     customer_token = Math.random() + new Date().toLocaleDateString();
-    //     console.log("Customer Token: " + customer_token);
-
-    //     const url = "http://localhost:7070/shop/v1/customer";
-    //     try {
-    //       const result = await fetch(url, {
-    //         method: "POST",
-    //         headers: {
-    //           "content-type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //           name: "yultrish",
-    //           city: "Accra",
-    //           token: customer_token,
-    //         }),
-    //       });
-
-    //       if (result.status === 200) {
-    //         localStorage.setItem("customer_token", customer_token);
-    //       }
-    //     } catch (error) {
-    //       console.error("Error creating a new customer:", error);
-    //     }
-    //   }
-    //   console.log("Customer already created");
-    //   console.log(cartNumber);
-    // }
-
     async function cartNumber() {
       try {
         console.log("Getting cart items list");
@@ -93,7 +58,6 @@ const Navbar = () => {
         if (result.status === 200) {
           let response = await result.json();
           console.log(response);
-          // console.log("Response ID: " + id);
           const id = localStorage.getItem("userID");
           console.log("Customer ID: " + id);
 
@@ -154,6 +118,7 @@ const Navbar = () => {
       </>
     );
   } else {
+    setCartCount(0);
     authElement = (
       <li className="nav-link cursor-pointer">
         <Link to="/login">
@@ -180,7 +145,9 @@ const Navbar = () => {
               </Link>
               <li>About</li>
               <li>Contact</li>
-              <li>Account</li>
+              <Link to="/checkout">
+                <li>Account</li>
+              </Link>
             </ul>
           </nav>
           <a>
@@ -189,13 +156,7 @@ const Navbar = () => {
               <span className="cart-number">{cartCount}</span>
             </Link>
           </a>
-          <img
-            src={menuIcon}
-            alt="Menu"
-            className="menu-icon"
-            // onClick={toggleMenu}
-            // onClick = {}
-          />
+          <img src={menuIcon} alt="Menu" className="menu-icon" />
         </div>
 
         <div className="row">
@@ -203,14 +164,14 @@ const Navbar = () => {
             <h1>Give Your Workout A New Style !</h1>
             <p>
               Success isn't always about greatness. It's about consistency.
-              Consistent hard work gain success. Gretness will come.
+              Consistent hard work gains success. Greatness will come.
             </p>
             <Link to="/home">
               <div className="btn">Explore Now &#8594;</div>
             </Link>
           </div>
           <div className="col-2">
-            <img src="images/image1.png" />
+            <img src="images/image1.png" alt="Workout" />
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import ProductList from "../components/Product";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
+
 import "../components/styles.css";
 import "./Home.css";
 
